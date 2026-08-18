@@ -13,6 +13,12 @@ jobs:
         with:
           flutter-version: '3.24.0'
           channel: 'stable'
+      - name: Mover main.dart a lib/
+        run: |
+          mkdir -p lib
+          if [ -f main.dart ]; then mv main.dart lib/main.dart; fi
+      - name: Generar carpetas de Android faltantes
+        run: flutter create --platforms=android .
       - run: flutter pub get
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
