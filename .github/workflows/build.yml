@@ -19,6 +19,14 @@ jobs:
           if [ -f main.dart ]; then mv main.dart lib/main.dart; fi
       - name: Generar carpetas de Android faltantes
         run: flutter create --platforms=android .
+      - name: Actualizar version de Kotlin
+        run: |
+          if [ -f android/settings.gradle ]; then
+            sed -i 's/org.jetbrains.kotlin.android" version "[^"]*"/org.jetbrains.kotlin.android" version "1.9.24"/' android/settings.gradle
+          fi
+          if [ -f android/settings.gradle.kts ]; then
+            sed -i 's/org.jetbrains.kotlin.android") version "[^"]*"/org.jetbrains.kotlin.android") version "1.9.24"/' android/settings.gradle.kts
+          fi
       - run: flutter pub get
       - run: flutter build apk --release
       - uses: actions/upload-artifact@v4
