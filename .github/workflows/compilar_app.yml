@@ -1,0 +1,34 @@
+name: Compilar APK Oficial
+
+on:
+  workflow_dispatch: # Esto nos da el botón para activarlo manualmente
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo del repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Java (Requerido para Android)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Descargar librerias de Flutter
+        run: flutter pub get
+
+      - name: Compilar Instalador APK
+        run: flutter build apk --release
+
+      - name: Guardar el archivo APK para descargar
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
