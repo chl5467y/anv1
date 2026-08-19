@@ -1,0 +1,25 @@
+name: Servidor Actualizador Real
+
+on:
+  workflow_dispatch: # Esto nos dará el botón manual limpio
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar codigo
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar librerias del sistema
+        run: |
+          pip install playwright beautifulsoup4 lxml firebase-admin
+          python -m playwright install chromium
+          python -m playwright install-deps chromium 
+
+      - name: Correr Extractor Oficial
+        run: python animev1_tracker.py
