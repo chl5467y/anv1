@@ -1,5 +1,5 @@
 name: Servidor Actualizador Real
-
+ 
 on:
   workflow_dispatch: # Esto nos dará el botón manual limpio
 
