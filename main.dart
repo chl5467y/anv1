@@ -123,8 +123,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final coleccion = FirebaseFirestore.instance
+      final coleccion = FirebaseFirestore.instance
         .collection('tracker_episodios')
+        .orderBy('titulo', descending: false)
         .orderBy(FieldPath.documentId, descending: true);
 
     return Scaffold(
