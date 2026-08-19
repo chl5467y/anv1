@@ -1,7 +1,7 @@
 name: Servidor Actualizador Real
 
 on:
-  workflow_dispatch: # Esto nos dará el botón manual limpio
+  workflow_dispatch: # Activa el botón manual en la pestaña Actions
 
 jobs:
   run-python-script:
@@ -15,11 +15,12 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Instalar librerias del sistema
+      - name: Instalar librerias y dependencias del sistema
         run: |
           pip install playwright beautifulsoup4 lxml firebase-admin
           python -m playwright install chromium
-          python -m playwright install-deps chromium 
+          # Comando crítico para instalar los componentes de Linux necesarios:
+          python -m playwright install-deps chromium
 
       - name: Correr Extractor Oficial
         run: python animev1_tracker.py
