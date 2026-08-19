@@ -1,27 +1,25 @@
-name: Extractor Automático de Anime
+name: Extractor Automatico de Anime
 
 on:
-  schedule:
-    # Se ejecutará automáticamente cada 3 horas en los servidores de GitHub
-    - cron: '0 */3 * * *'
-  workflow_dispatch: # Te permite activar la actualización manualmente con un botón
+  workflow_dispatch: # Esto nos da el botón para activarlo manualmente
 
 jobs:
-  build:
+  run-scraper:
     runs-on: ubuntu-latest
     steps:
-      - name: Descargar código del repositorio
+      - name: Descargar codigo del repositorio
         uses: actions/checkout@v3
 
       - name: Configurar Python
         uses: actions/setup-python@v4
         with:
-          python-cache: '3.10'
+          python-version: '3.10'
 
-      - name: Instalar librerías del extractor
+      - name: Instalar librerias y dependencias de Playwright
         run: |
           pip install playwright beautifulsoup4 lxml firebase-admin
-          python -m playwright install
+          python -m playwright install chromium
+          python -m playwright install-deps chromium 
 
-      - name: Ejecutar script extractor
+      - name: Ejecutar Extractor Real
         run: python animev1_tracker.py
